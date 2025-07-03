@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply For Loan - MoneyHub</title>
+    <link rel="stylesheet" href="assets/css/apply-for-loan.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="MoneyHub">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="exchange.html">Exchange Rate</a></li>
+                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="right-nav">
+            <a href="apply-for-loan.html"><button class="apply-btn">Apply For Loan</button></a>
+            <div class="language-selector">
+                <img src="assets/images/flag.png" alt="KH Flag">
+            </div>
+            <div class="user-icon">
+                <a href="user.html">
+                    <img src="assets/images/profile.png" alt="User">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <div class="container">
+            <h2>LOAN REQUEST</h2>
+            <form>
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <label class="required">National ID <input type="file" name="national_id" required></label>
+                    <label class="required">Birth Certificate <input type="file" name="birth_certificate" required></label>
+                    <label class="required">Family Record Book <input type="file" name="family_record_book" required></label>
+                    <label class="required">Carnet De Residence <input type="file" name="carnet_de_residence" required></label>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Income Detail</legend>
+                    <label class="required">Employment Status 
+                        <select name="employment_status" required>
+                            <option value="" disabled selected>Select your employment status</option>
+                            <option value="full-time">Full-time</option>
+                            <option value="part-time">Part-time</option>
+                            <option value="self-employed">Self-employed</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="student">Student</option>
+                            <option value="retired">Retired</option>
+                        </select>
+                    </label>
+                    <label class="required">Job Title <input type="text" name="job_title" placeholder="Enter your job title" required></label>
+                    <label class="required">Monthly Income (USD) <input type="text" name="monthly_income" placeholder="Enter your income in USD" required></label>
+                    <label class="required">Income Statement <input type="file" name="income_statement" required></label>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Loan Information</legend>
+                    <label class="required">Amount Requested (USD) <input type="text" name="amount_request" placeholder="Enter Amount in USD" required></label>
+                    <label class="required">Repayment Term (Months) <input type="text" name="repayment_term" placeholder="Enter Loan Duration in Months" required></label>
+                    <label class="required">Purpose <input type="text" name="purpose" placeholder="Enter the reason for requesting this loan" required></label>
+                </fieldset>
+            
+                <fieldset>
+                    <legend>Collateral Detail</legend>
+                    <label class="required">Type of Collateral 
+                        <select name="collateral_type" required>
+                            <option value="" disabled selected>Select your collateral type</option>
+                            <option value="real-estate">Real Estate</option>
+                            <option value="vehicle">Vehicle</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="stock">Stock</option>
+                            <option value="equipment">Equipment</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </label>
+                    <label class="required">Estimated Value <input type="text" name="estimated_value" placeholder="Enter estimated value in USD" required></label>
+                    <label class="required">Ownership Proof <input type="file" name="ownership_proof" required></label>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Guarantor Information</legend>
+                    <label class="required">Full Name <input type="text" name="guarantor_name" placeholder="Enter Name" required></label>
+                    <label class="required">Relationship to Applicant <input type="text" name="guarantor_relationship" placeholder="Enter Relationship" required></label>
+                    <label class="required">National ID <input type="file" name="guarantor_national_id" required></label>
+                    <label class="required">Income Statement <input type="file" name="guarantor_income_statement" required></label>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Declaration & Consent</legend>
+                    <label class="required"><input type="checkbox" name="declaration" required> I hereby declare that the information provided in this loan request form is true, complete, and accurate to the best of my knowledge. I understand that providing false or misleading information may result in the rejection of my application or legal consequences.</label>
+                    <label class="required"><input type="checkbox" name="consent" required> I acknowledge that submitting this form does not guarantee loan approval and that MoneyHub reserves the right to verify the details provided, including conducting credit and background checks.</label>
+                    <label class="required"><input type="checkbox" name="terms" required> I have read, understood, and agree to the <a href="terms-conditions.html">terms and conditions</a> of MoneyHub.</label>
+                </fieldset>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 MoneyHub. All rights reserved.</p>
+    </footer>
+    <script src="assets/js/index.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission behavior
+    
+            // Check if the user is logged in
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('You need to log in to submit a loan request.');
+                window.location.href = 'moneyhub-signin-page.html'; // Redirect to login page
+                return;
+            }
+    
+            // Create a FormData object to handle file uploads and form fields
+            const formData = new FormData(event.target);
+    
+            try {
+                // Send the loan request to the backend
+                const response = await fetch('http://localhost:3000/api/requests', {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${token}` // Include the token in the Authorization header
+                    },
+                    body: formData
+                });
+    
+                const data = await response.json();
+    
+                if (response.ok) {
+                    // Loan request submitted successfully
+                    alert('Loan request submitted successfully!');
+                    window.location.href = 'index.html'; // Redirect to the homepage
+                } else {
+                    // Display validation errors or other issues
+                    if (data.errors) {
+                        const errorMessages = Object.values(data.errors).join('\n');
+                        alert(`Validation errors:\n${errorMessages}`);
+                    } else {
+                        alert(data.message || 'Failed to submit loan request. Please try again.');
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>
