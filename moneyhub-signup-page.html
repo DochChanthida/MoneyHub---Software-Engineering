@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyHub - Create an account</title>
+    <link rel="stylesheet" href="assets/css/signup-page.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">
+                <a href="moneyhub-landing-page.html">
+                    <img src="assets/images/Logo.png" alt="MoneyHub Logo">
+                </a>
+            </div>
+        </div>
+
+        <div class="left-panel">
+            <div class="flag-selector">
+                <img src="assets/images/flag.png" alt="Cambodia Flag">
+            </div>
+
+            <div class="form-container">
+                <h1>Create an account</h1>
+
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" id="first_name" name="first_name" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="date_of_birth">Date of Birth</label>
+                        <input type="date" id="date_of_birth" name="date_of_birth" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="contact_number">Contact Number</label>
+                        <input type="tel" id="contact_number" name="contact_number" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+            
+                    <button type="submit">Sign up</button>
+                </form>
+
+                <div style="margin-top: 20px; text-align: center; font-size: 14px;">
+                    Have any account? <a href="moneyhub-signin-page.html" style="color: white;">Sign in</a>
+                </div>
+            </div>
+
+            <div class="footer">
+                <a href="terms-conditions.html">Terms & Conditions</a>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="quote-overlay">
+                <div class="quote">
+                    "Empowering dreams with accessible microfinance loans—unlocking opportunities, fueling growth, and transforming lives one small loan at a time!"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 MoneyHub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Handle form submission
+        document.getElementById('signup-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission behavior
+    
+            // Get form data
+            const first_name = document.getElementById('first_name').value.trim();
+            const last_name = document.getElementById('last_name').value.trim();
+            const gender = document.getElementById('gender').value;
+            const date_of_birth = document.getElementById('date_of_birth').value;
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const contact_number = document.getElementById('contact_number').value.trim();
+            const address = document.getElementById('address').value.trim();
+    
+            // Validate input fields
+            if (!first_name || !last_name || !gender || !date_of_birth || !email || !password || !contact_number || !address) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+    
+            try {
+                // Send registration request to the backend
+                const response = await fetch('http://localhost:3000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        first_name,
+                        last_name,
+                        gender,
+                        date_of_birth,
+                        email,
+                        password,
+                        contact_number,
+                        address
+                    })
+                });
+    
+                const data = await response.json();
+    
+                if (response.ok) {
+                    // Registration successful
+                    alert('Registration successful! You can now log in.');
+                    window.location.href = 'moneyhub-signin-page.html'; // Redirect to the login page
+                } else {
+                    // Display validation errors or other issues
+                    if (data.errors) {
+                        const errorMessages = Object.values(data.errors).join('\n');
+                        alert(`Validation errors:\n${errorMessages}`);
+                    } else {
+                        alert(data.message || 'Registration failed. Please try again.');
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>
