@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Request - MoneyHub</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Main container styling */
+.edit-request-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edit-request-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+/* Form styling */
+form.edit-request-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* File input styling */
+.form-group input[type="file"] {
+    padding: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Button styling */
+button.edit-request-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.edit-request-btn:hover {
+    background-color: #0056b3;
+}
+
+.content {
+    margin-top: 80px; /* Adjust this value based on your header's height */
+    padding: 20px;
+}
+
+.file-info {
+    font-size: 12px;
+    color: #555;
+    margin-top: 5px;
+}
+
+button.delete-request-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #f44336; /* Red background */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.delete-request-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="MoneyHub">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="exchange.html">Exchange Rate</a></li>
+                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="right-nav">
+            <a href="apply-for-loan.html"><button class="apply-btn">Apply For Loan</button></a>
+            <div class="language-selector">
+                <img src="assets/images/flag.png" alt="KH Flag">
+            </div>
+            <div class="user-icon">
+                <a href="user.html">
+                    <img src="assets/images/profile.png" alt="User">
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="content">
+        <div class="edit-request-container">
+            <h2 class="edit-request-header">Edit Request</h2>
+            <form class="edit-request-form" id="edit-request-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="employment_status">Employment Status:</label>
+                    <input type="text" id="employment_status" name="employment_status" required>
+                </div>
+                <div class="form-group">
+                    <label for="job_title">Job Title:</label>
+                    <input type="text" id="job_title" name="job_title" required>
+                </div>
+                <div class="form-group">
+                    <label for="monthly_income">Monthly Income:</label>
+                    <input type="number" id="monthly_income" name="monthly_income" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount_request">Amount Requested:</label>
+                    <input type="number" id="amount_request" name="amount_request" required>
+                </div>
+                <div class="form-group">
+                    <label for="repayment_term">Repayment Term (in months):</label>
+                    <input type="number" id="repayment_term" name="repayment_term" required>
+                </div>
+                <div class="form-group">
+                    <label for="purpose">Purpose:</label>
+                    <textarea id="purpose" name="purpose" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="collateral_type">Collateral Type:</label>
+                    <input type="text" id="collateral_type" name="collateral_type" required>
+                </div>
+                <div class="form-group">
+                    <label for="estimated_value">Estimated Value:</label>
+                    <input type="number" id="estimated_value" name="estimated_value" required>
+                </div>
+                <div class="form-group">
+                    <label for="guarantor_name">Guarantor Name:</label>
+                    <input type="text" id="guarantor_name" name="guarantor_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="guarantor_relationship">Guarantor Relationship:</label>
+                    <input type="text" id="guarantor_relationship" name="guarantor_relationship" required>
+                </div>
+                <div class="form-group">
+                    <label for="national_id">National ID:</label>
+                    <input type="file" id="national_id" name="national_id">
+                    <p class="file-info" id="national_id_info">No file uploaded</p>
+                </div>
+                <div class="form-group">
+                    <label for="birth_certificate">Birth Certificate:</label>
+                    <input type="file" id="birth_certificate" name="birth_certificate">
+                    <p class="file-info" id="birth_certificate_info">No file uploaded</p>
+                </div>
+                <div class="form-group">
+                    <label for="family_record_book">Family Record Book:</label>
+                    <input type="file" id="family_record_book" name="family_record_book">
+                    <p class="file-info" id="family_record_book_info">No file uploaded</p>
+                </div>
+                <div class="form-group">
+                    <label for="carnet_de_residence">Carnet de Residence:</label>
+                    <input type="file" id="carnet_de_residence" name="carnet_de_residence">
+                    <p class="file-info" id="carnet_de_residence_info">No file uploaded</p>
+                </div>
+                <div class="form-group">
+                    <label for="income_statement">Income Statement:</label>
+                    <input type="file" id="income_statement" name="income_statement">
+                    <p class="file-info" id="income_statement_info">No file uploaded</p>
+                </div>
+                <div class="form-group">
+                    <label for="ownership_proof">Ownership Proof:</label>
+                    <input type="file" id="ownership_proof" name="ownership_proof">
+                    <p class="file-info" id="ownership_proof_info">No file uploaded</p>
+                </div>
+                <div class="form-group">
+                    <label for="guarantor_national_id">Guarantor National ID:</label>
+                    <input type="file" id="guarantor_national_id" name="guarantor_national_id">
+                    <p class="file-info" id="guarantor_national_id_info">No file uploaded</p>
+                </div>
+                <div class="form-group">
+                    <label for="guarantor_income_statement">Guarantor Income Statement:</label>
+                    <input type="file" id="guarantor_income_statement" name="guarantor_income_statement">
+                    <p class="file-info" id="guarantor_income_statement_info">No file uploaded</p>
+                </div>
+                <button type="submit" class="edit-request-btn">Save Changes</button>
+                <button type="button" class="delete-request-btn" id="delete-request-btn">Delete Request</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 MoneyHub. All rights reserved.</p>
+    </footer>
+
+    <script src="assets/js/index.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const requestId = params.get('id'); // Get the request ID from the URL
+
+    if (!requestId) {
+        alert('No request ID provided.');
+        window.location.href = 'user.html';
+        return;
+    }
+
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:3000/api/requests/${requestId}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(errorData.message || 'Failed to fetch request data.');
+            window.location.href = 'user.html';
+            return;
+        }
+
+        const request = await response.json();
+
+        // Populate the form fields with the request data
+        document.getElementById('employment_status').value = request.employment_status || '';
+        document.getElementById('job_title').value = request.job_title || '';
+        document.getElementById('monthly_income').value = request.monthly_income || '';
+        document.getElementById('amount_request').value = request.amount_request || '';
+        document.getElementById('repayment_term').value = request.repayment_term || '';
+        document.getElementById('purpose').value = request.purpose || '';
+        document.getElementById('collateral_type').value = request.collateral_type || '';
+        document.getElementById('estimated_value').value = request.estimated_value || '';
+        document.getElementById('guarantor_name').value = request.guarantor_name || '';
+        document.getElementById('guarantor_relationship').value = request.guarantor_relationship || '';
+
+        // Populate file info placeholders
+        document.getElementById('national_id_info').textContent = request.national_id ? `Uploaded: ${request.national_id.split('/').pop()}` : 'No file uploaded';
+        document.getElementById('birth_certificate_info').textContent = request.birth_certificate ? `Uploaded: ${request.birth_certificate.split('/').pop()}` : 'No file uploaded';
+        document.getElementById('family_record_book_info').textContent = request.family_record_book ? `Uploaded: ${request.family_record_book.split('/').pop()}` : 'No file uploaded';
+        document.getElementById('carnet_de_residence_info').textContent = request.carnet_de_residence ? `Uploaded: ${request.carnet_de_residence.split('/').pop()}` : 'No file uploaded';
+        document.getElementById('income_statement_info').textContent = request.income_statement ? `Uploaded: ${request.income_statement.split('/').pop()}` : 'No file uploaded';
+        document.getElementById('ownership_proof_info').textContent = request.ownership_proof ? `Uploaded: ${request.ownership_proof.split('/').pop()}` : 'No file uploaded';
+        document.getElementById('guarantor_national_id_info').textContent = request.guarantor_national_id ? `Uploaded: ${request.guarantor_national_id.split('/').pop()}` : 'No file uploaded';
+        document.getElementById('guarantor_income_statement_info').textContent = request.guarantor_income_statement ? `Uploaded: ${request.guarantor_income_statement.split('/').pop()}` : 'No file uploaded';
+    } catch (error) {
+        console.error('Error fetching request data:', error);
+        alert('An error occurred while fetching the request data.');
+        window.location.href = 'user.html';
+    }
+});
+
+        // Handle form submission
+        document.getElementById('edit-request-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const params = new URLSearchParams(window.location.search);
+            const requestId = params.get('id');
+            const token = localStorage.getItem('token');
+
+            const formData = new FormData(event.target);
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/requests/${requestId}`, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(errorData.message || 'Failed to update the request.');
+                    return;
+                }
+
+                alert('Request updated successfully!');
+                window.location.href = 'user.html';
+            } catch (error) {
+                console.error('Error updating request:', error);
+                alert('An error occurred while updating the request.');
+            }
+        });
+
+        document.getElementById('delete-request-btn').addEventListener('click', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const requestId = params.get('id'); // Get the request ID from the URL
+
+    if (!requestId) {
+        alert('No request ID provided.');
+        return;
+    }
+
+    const confirmation = confirm('Are you sure you want to delete this request? This action cannot be undone.');
+    if (!confirmation) return;
+
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:3000/api/requests/${requestId}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(errorData.message || 'Failed to delete the request.');
+            return;
+        }
+
+        alert('Request deleted successfully!');
+        window.location.href = 'user.html'; // Redirect to the user page
+    } catch (error) {
+        console.error('Error deleting request:', error);
+        alert('An error occurred while deleting the request.');
+    }
+});
+    </script>
+</body>
+</html>

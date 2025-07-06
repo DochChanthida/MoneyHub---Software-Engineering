@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - MoneyHub</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="assets/js/profile.js"></script>
+    <link rel="stylesheet" href="assets/css/profile-edit.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="MoneyHub">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="exchange.html">Exchange Rate</a></li>
+                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="right-nav">
+            <a href="apply-for-loan.html"><button class="apply-btn">Apply For Loan</button></a>
+            <div class="language-selector">
+                <img src="assets/images/flag.png" alt="KH Flag">
+            </div>
+            <div class="user-icon">
+                <a href="user.html"><img src="assets/images/profile.png" alt="User"></a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="user-container">
+        <!-- User Profile Section -->
+        <div class="user-profile-section">
+            <div class="user-sidebar">
+                <h2>User Profile</h2>
+                <div class="user-profile-pic">
+                    <img src="assets/images/profile.png" alt="User Profile">
+                </div>
+                <h3>Loading...</h3>
+                <button class="user-btn edit-profile" onclick="window.location.href='edit-profile.html'">Edit Profile</button>
+                <button class="user-btn" onclick="window.location.href='change-password.html'">Change Password</button>
+                <button class="user-btn logout-btn" id="logout-btn">Logout</button>
+            </div>
+
+            <div class="user-main-content">
+                <h2>Personal Information</h2>
+                <div class="user-info-grid">
+                    <div class="user-info-item">
+                        <label>First Name:</label>
+                        <p class="user-bold" id="first_name">Loading...</p>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Last Name:</label>
+                        <p class="user-bold" id="last_name">Loading...</p>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Gender:</label>
+                        <p class="user-bold" id="gender">Loading...</p>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Date of Birth:</label>
+                        <p class="user-bold" id="date_of_birth">Loading...</p>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Email Address:</label>
+                        <p class="user-bold" id="email">Loading...</p>
+                    </div>
+                    <div class="user-info-item">
+                        <label>Contact Number:</label>
+                        <p class="user-bold" id="contact_number">Loading...</p>
+                    </div>
+                    <div class="user-info-item user-address">
+                        <label>Address:</label>
+                        <p class="user-bold" id="address">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submitted Requests Section -->
+        <div class="requests-section">
+            <h2>Submitted Requests</h2>
+            <div class="requests-table-container">
+                <table class="requests-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Request ID</th>
+                            <th>Purpose</th>
+                            <th>Amount</th>
+                            <th>Dated Submitted</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Money Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+            if (!token) {
+                alert('You need to log in to view your profile.');
+                window.location.href = 'moneyhub-signin-page.html';
+                return;
+            }
+
+            try {
+                // Fetch the user's profile from the backend
+                const profileResponse = await fetch('http://localhost:3000/api/profile', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!profileResponse.ok) {
+                    const errorData = await profileResponse.json();
+                    alert(errorData.message || 'Failed to fetch user profile.');
+                    if (profileResponse.status === 401) {
+                        window.location.href = 'moneyhub-signin-page.html';
+                    }
+                    return;
+                }
+
+                const user = await profileResponse.json();
+
+                // Populate the profile fields with the user's data
+                document.getElementById('first_name').textContent = user.first_name || 'Not specified';
+                document.getElementById('last_name').textContent = user.last_name || 'Not specified';
+                document.getElementById('gender').textContent = user.gender || 'Not specified';
+                document.getElementById('date_of_birth').textContent = user.date_of_birth || 'Not specified';
+                document.getElementById('email').textContent = user.email || 'Not specified';
+                document.getElementById('contact_number').textContent = user.contact_number || 'Not specified';
+                document.getElementById('address').textContent = user.address || 'Not specified';
+
+                // Update the <h3> tag with the user's full name
+                const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim();
+                document.querySelector('.user-sidebar h3').textContent = fullName || 'User';
+
+                // Update the profile image
+                const profileImage = document.querySelector('.user-profile-pic img');
+                profileImage.src = user.image ? `../backend/${user.image}` : 'assets/images/default-profile.png'; // Fallback to a default image
+                profileImage.alt = `${fullName}'s Profile Picture`;
+
+                // Fetch the user's requests from the backend
+                const requestsResponse = await fetch('http://localhost:3000/api/requests/myRequests', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!requestsResponse.ok) {
+                    const errorData = await requestsResponse.json();
+                    alert(errorData.message || 'Failed to fetch user requests.');
+                    return;
+                }
+
+                const requests = await requestsResponse.json();
+
+                // Populate the requests table
+                const tableBody = document.querySelector('.requests-table tbody');
+                tableBody.innerHTML = ''; // Clear existing rows
+
+                if (requests.length === 0) {
+                    // Display "No requests" if the user has no recent requests
+                    const noRequestsRow = document.createElement('tr');
+                    noRequestsRow.innerHTML = `
+                        <td colspan="6" style="text-align: center; color: #555;">You have not made any requests yet.</td>
+                    `;
+                    tableBody.appendChild(noRequestsRow);
+                    } else {
+                        requests.forEach((request, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${index + 1}</td>
+                                <td><a href="edit-request.html?id=${request.id}">${request.id}</a></td>
+                                <td>${request.purpose}</td>
+                                <td>${request.amount_request || 'N/A'}</td>
+                                <td>${new Date(request.created_at).toLocaleDateString()}</td>
+                                <td>${request.status}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while fetching your data. Please try again later.');
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            // Remove the token from localStorage
+            localStorage.removeItem('token');
+
+            // Redirect the user to the login page
+            window.location.href = 'moneyhub-signin-page.html';
+        });
+    </script>
+</body>
+</html>

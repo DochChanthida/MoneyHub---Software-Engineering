@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - MoneyHub</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/editprofile.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="MoneyHub">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="exchange.html">Exchange Rate</a></li>
+                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="user-container">
+        <!-- User Profile Section -->
+        <div class="user-profile-section">
+            <div class="user-sidebar">
+                <h2>Edit Profile</h2>
+                <div class="user-profile-pic">
+                    <img id="profile_image_preview" src="assets/images/default-profile.png" alt="Profile Preview">
+                </div>
+                <input type="file" id="profile_image" name="profile_image" accept="image/*">
+                <button class="user-btn cancel-btn" onclick="window.location.href='user.html'">Cancel</button>
+            </div>
+
+            <div class="user-main-content">
+                <h2>Personal Information</h2>
+                <form id="edit-profile-form">
+                    <div class="user-info-item">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" required>
+                    </div>
+                    <div class="user-info-item">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" required>
+                    </div>
+                    <div class="user-info-item">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Select your gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
+                    <div class="user-info-item">
+                        <label for="date_of_birth">Date of Birth:</label>
+                        <input type="date" id="date_of_birth" name="date_of_birth" required>
+                    </div>
+                    <div class="user-info-item">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="user-info-item">
+                        <label for="contact_number">Contact Number:</label>
+                        <input type="tel" id="contact_number" name="contact_number" placeholder="Enter your contact number" required>
+                    </div>
+                    <div class="user-info-item user-address">
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" rows="3" placeholder="Enter your address" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="save-btn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 MoneyHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+            if (!token) {
+                alert('You need to log in to edit your profile.');
+                window.location.href = 'moneyhub-signin-page.html';
+                return;
+            }
+
+            try {
+                // Fetch the user's profile from the backend
+                const response = await fetch('http://localhost:3000/api/profile', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(errorData.message || 'Failed to fetch user profile.');
+                    if (response.status === 401) {
+                        window.location.href = 'moneyhub-signin-page.html';
+                    }
+                    return;
+                }
+
+                const user = await response.json();
+
+                // Populate the form fields with the user's data
+                document.getElementById('first_name').value = user.first_name || '';
+                document.getElementById('last_name').value = user.last_name || '';
+                document.getElementById('gender').value = user.gender || '';
+                // Convert date_of_birth to YYYY-MM-DD format if necessary
+                if (user.date_of_birth) {
+                    const date = new Date(user.date_of_birth); // Parse the date
+                    const formattedDate = date.toISOString().split('T')[0]; // Convert to YYYY-MM-DD
+                    document.getElementById('date_of_birth').value = formattedDate;
+                } else {
+                    document.getElementById('date_of_birth').value = ''; // Default to empty if no date is provided
+                }
+                document.getElementById('email').value = user.email || '';
+                document.getElementById('contact_number').value = user.contact_number || '';
+                document.getElementById('address').value = user.address || '';
+
+                // Populate the profile image preview
+                const profileImagePreview = document.getElementById('profile_image_preview');
+                profileImagePreview.src = `../backend/${user.image}`|| 'assets/images/default-profile.png';
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+                alert('An error occurred while fetching your profile. Please try again later.');
+            }
+        });
+
+        // Handle profile image preview
+        document.getElementById('profile_image').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('profile_image_preview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('edit-profile-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+            const formData = new FormData();
+            formData.append('first_name', document.getElementById('first_name').value.trim());
+            formData.append('last_name', document.getElementById('last_name').value.trim());
+            formData.append('gender', document.getElementById('gender').value);
+            formData.append('email', document.getElementById('email').value.trim());
+            formData.append('date_of_birth', document.getElementById('date_of_birth').value);
+            formData.append('contact_number', document.getElementById('contact_number').value.trim());
+            formData.append('address', document.getElementById('address').value.trim());
+
+            // Add the profile picture file if selected
+            const profileImage = document.getElementById('profile_image').files[0];
+            if (profileImage) {
+                formData.append('image', profileImage);
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/api/profile', {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: formData // Send the FormData object
+                });
+
+                if (response.ok) {
+                    alert('Profile updated successfully!');
+                    window.location.href = 'user.html'; // Redirect back to the profile page
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.message || 'Failed to update profile.');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('An error occurred while updating your profile. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>

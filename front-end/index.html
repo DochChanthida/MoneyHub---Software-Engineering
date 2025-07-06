@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyHub - Financial Solutions</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/logo.png" alt="MoneyHub">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="exchange.html">Exchange Rate</a></li>
+                <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="right-nav">
+            <a href="apply-for-loan.html"><button class="apply-btn">Apply For Loan</button></a>
+            <div class="language-selector">
+                <img src="assets/images/flag.png" alt="KH Flag">
+            </div>
+            <div class="user-icon">
+                <a href="user.html">
+                    <img src="assets/images/profile.png" alt="User">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Apply for Loans and Exchange Currency with Ease, Security, and Speed!</h1>
+            <p>Your Trusted Partner In Financial Solutions</p>
+            <div class="hero-buttons">
+                <a href="about-us.html" class="btn">Learn More</a>
+                <a href="exchange.html" class="btn-1">View Exchange Rate</a>
+            </div>
+        </div>
+    </section>
+
+<!-- About Section -->
+<section class="about">
+    <div class="about-grid">
+        <div class="about-image">
+            <img src="assets/images/About.png" alt="About Us Image">
+        </div>
+        <div class="about-content">
+            <h2>" Empowering Financial Freedom, One Step at a Time."</h2>
+            <p>The journey to achieving your financial goals shouldn't be held back by complicated processes, long wait times, or confusing paperwork. We're here to change that narrative.Whether you're looking for a loan to support your dreams or seeking the best exchange rates for your currency needs, MoneyHub is designed to serve you at every step of your financial journey.</p>
+            <a href="about-us.html" class="btn">Learn More About Us</a>
+        </div>
+    </div>
+</section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why Choose MoneyHub?</h2>
+        <p>Here at MoneyHub, we believe that financial freedom should be within everyone's reach!</p>
+        <div class="feature-cards">
+            <div class="card">
+                <img src="assets/images/pic1.jpg" alt="Fast Loan">
+                <h3>Fast & Easy Loan Applications</h3>
+                <p>No more filling out piles of paperwork. Apply for a loan in just a few simple steps, get updates on your application in real-time.</p>
+                <a href="apply-for-loan.html" class="btn">Apply Now</a>
+            </div>
+            <div class="card">
+                <img src="assets/images/pic2.jpg" alt="Exchange Rates">
+                <h3>Real-Time Currency Exchange Rates</h3>
+                <p> Our platform shows live, up-to-date exchange rates so you can make informed decisions on your currency exchanges.</p>
+                <a href="exchange.html" class="btn">Find Rates</a>
+            </div>
+            <div class="card">
+                <img src="assets/images/pic3.jpg" alt="Customer Centered">
+                <h3>Customer-Centered</h3>
+                <p>We're here for you. We listen to our users, and we continuously improve to meet your needs and help you achieve your financial goals.
+                </p>
+                <a href="#contact" class="btn">Contact Us</a>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p class="subheading">Have any queries? Feel free to reach out to us. We are very happy to help you!</p>
+    <div class="contact-grid">
+        <div class="contact-info">
+            <div class="contact-box light-gray">
+                <img src="assets/images/phone.png" alt="Phone Icon">
+                <h3><strong>Phone:</strong></h3>
+                <p>(+855) 123 456 789</p>
+            </div>
+            <div class="contact-box navy">
+                <img src="assets/images/Location.png" alt="Location Icon">
+                <h3><strong>Location:</strong></h3>
+                <p>Street 234, Toul Kork, Phnom Penh, Cambodia</p>
+            </div>
+            <div class="contact-box navy">
+                <img src="assets/images/Mail.png" alt="Email Icon">
+                <h3><strong>Email:</strong></h3>
+                <p><a href="mailto:support@moneyhubloans.com">support@moneyhubloans.com</a></p>
+            </div>
+            <div class="contact-box light-gray">
+                <img src="assets/images/Clock.png" alt="Office Hours Icon">
+                <h3><strong>Office Hours:</strong></h3>
+                <p>8:00 - 11:00 AM & 1:00 - 5:00 PM</p>
+            </div>
+        </div>
+        <div class="contact-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.760227509634!2d104.91601231533498!3d11.562108991784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109518d5e5b5b5b%3A0x5e5b5b5b5b5b5b5b!2sPhnom%20Penh%2C%20Cambodia!5e0!3m2!1sen!2sus!4v1616581234567!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2025 Money Hub. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="assets/js/index.js"></script>
+<script>
+        // Handle token in URL (for SSO)
+        document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (token) {
+        // Save the token to localStorage
+        localStorage.setItem('token', token);
+
+        // Remove the token from the URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+        // Redirect to the homepage or dashboard
+        window.location.href = '/frontend/index.html';
+    }
+});
+</script>
+
+</body>
+</html>
