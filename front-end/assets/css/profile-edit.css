@@ -1,0 +1,271 @@
+/* Edit page styles */
+.field-container {
+    position: relative;
+    background-color: #f5f5f5;
+    padding: 12px;
+    border-radius: 6px;
+    min-height: 24px;
+  }
+  
+  .edit-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #2B4B85;
+  }
+  
+  .accept-edit {
+    color: #4caf50;
+    font-weight: bold;
+  }
+  
+  .calendar-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: #2B4B85;
+  }
+  
+  .accept-date {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #4caf50;
+    font-weight: bold;
+  }
+  
+  /* Update the profile-pic-edit styling to ensure it's centered */
+  .profile-pic-edit {
+    position: relative;
+    display: block;
+    margin: 0 auto; /* Changed from 15px auto 0 to 0 auto */
+    background-color: #2B4B85;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    width: 180px; /* Fixed width */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profile-pic-edit:hover {
+    background-color: #2B4B85;
+  }
+  
+  /* Add some margin to the profile pic to make room for the text below */
+  .user-profile-pic {
+    width: 180px;
+    height: 180px;
+    margin: 10px auto 8px; /* Reduced from 60px to 30px bottom margin */
+    border-radius: 50%;
+    overflow: visible; /* Changed from hidden to visible */
+    position: relative;
+  }
+  
+  /* Keep the image circular */
+  .user-profile-pic img {
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .user-profile-pic:hover .profile-pic-edit {
+    background-color: #2B4B85;
+  }
+  
+  .profile-pic-edit-wrapper {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    align-items: center; /* Center the button vertically if needed */
+    margin-top: 20px; /* Add spacing above the button */
+  }
+  
+  /* Style for the Change Photo button */
+  .profile-pic-edit {
+    background-color: #2B4B85; /* Primary color */
+    color: white; /* Text color */
+    margin-left: 1px;
+    margin-bottom: 25px;
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding for better clickability */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 10px; /* Font size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center; /* Center text */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+
+.user-btn.profile-pic-edit.styled-btn:hover {
+  background-color:#2B4B85; /* Darker shade on hover */
+}
+
+.user-btn.profile-pic-edit.styled-btn:active {
+  background-color: #2B4B85; /* Even darker shade on click */
+}
+  /* Add a container for the profile pic and edit button to ensure proper alignment */
+  .profile-pic-container {
+    position: relative;
+    width: 180px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .field-value-edit {
+    width: calc(100% - 60px);
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #2B4B85;
+    font-size: 14px;
+    background-color: transparent;
+    outline: none;
+  }
+  
+  .save-btn {
+    background-color: #2B4B85;
+    color: white;
+  }
+  
+  .discard-btn {
+    background-color: #f5f5f5;
+    color: #2B4B85;
+  }
+  
+  /* Notification */
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .notification.show {
+    transform: translateX(0);
+  }
+  
+  /* Flatpickr calendar styling */
+  .flatpickr-calendar {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  
+  .flatpickr-day.selected {
+    background: #2B4B85;
+    border-color: #2B4B85;
+  }
+  
+  .flatpickr-day:hover {
+    background: #e6e6e6;
+  }
+  
+  /* Custom Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  .modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .modal-container {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 400px;
+    padding: 24px;
+    transform: translateY(-20px);
+    transition: transform 0.3s;
+  }
+  
+  .modal-overlay.active .modal-container {
+    transform: translateY(0);
+  }
+  
+  .modal-header {
+    margin-bottom: 16px;
+  }
+  
+  .modal-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+  
+  .modal-body {
+    margin-bottom: 24px;
+    color: #666;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  
+  .modal-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+  }
+  
+  .modal-btn-primary {
+    background-color: #2B4B85;
+    color: white;
+  }
+  
+  .modal-btn-primary:hover {
+    background-color: #2B4B85;
+  }
+  
+  .modal-btn-secondary {
+    background-color: #f5f5f5;
+    color: #2B4B85;
+  }
+  
+  .modal-btn-secondary:hover {
+    background-color: #e0e0e0;
+  }
+  
+  
